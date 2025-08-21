@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Users, User, Search, Bell, MessageCircle, GraduationCap, Calendar, Camera, Edit3, Lock, Sun, Moon, ArrowLeft, Phone, Mail, MapPin } from 'lucide-react'
+import { User as UserType } from '../App'
 
 interface ProfileScreenProps {
-  user: { ppmkId: string; name: string }
+  user: UserType
   onBack: () => void
 }
 
@@ -16,9 +17,13 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ user, onBack }) => {
     email: user.name === 'Demo User' ? 'nurmhd@gmail.com' : `${user.ppmkId.toLowerCase()}@student.my`,
     phoneKorea: '010-XXXX-XXXX',
     phoneMalaysia: '01X-XXX-XXXX',
-    university: 'Seoul National University',
+    university: user.university || 'Seoul National University',
     major: 'Computer Science',
-    year: '3rd Year'
+    year: '3rd Year',
+    scholarship: user.scholarship || 'MARA',
+    batch: user.batch || '2024',
+    clubs: user.clubs || [],
+    events: user.events || []
   }
 
   return (
@@ -131,6 +136,55 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ user, onBack }) => {
                 <div className="flex justify-between items-center py-3 border-b border-gray-100">
                   <span className="text-gray-700 font-medium">Phone number (Malaysia)</span>
                   <span className="text-gray-900">{profileData.phoneMalaysia}</span>
+                </div>
+                <div className="flex justify-between items-center py-3 border-b border-gray-100">
+                  <span className="text-gray-700 font-medium">University</span>
+                  <span className="text-gray-900">{profileData.university}</span>
+                </div>
+                <div className="flex justify-between items-center py-3 border-b border-gray-100">
+                  <span className="text-gray-700 font-medium">Scholarship</span>
+                  <span className="text-gray-900">{profileData.scholarship}</span>
+                </div>
+                <div className="flex justify-between items-center py-3 border-b border-gray-100">
+                  <span className="text-gray-700 font-medium">Batch</span>
+                  <span className="text-gray-900">{profileData.batch}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Memberships Section */}
+            <div className="mb-8">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Memberships</h3>
+              
+              {/* Clubs */}
+              <div className="mb-4">
+                <h4 className="text-sm font-medium text-gray-700 mb-2">Clubs</h4>
+                <div className="flex flex-wrap gap-2">
+                  {profileData.clubs.length > 0 ? (
+                    profileData.clubs.map((club, index) => (
+                      <span key={index} className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
+                        {club}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="text-gray-500 text-sm">No clubs joined</span>
+                  )}
+                </div>
+              </div>
+
+              {/* Events */}
+              <div className="mb-4">
+                <h4 className="text-sm font-medium text-gray-700 mb-2">Events</h4>
+                <div className="flex flex-wrap gap-2">
+                  {profileData.events.length > 0 ? (
+                    profileData.events.map((event, index) => (
+                      <span key={index} className="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm font-medium">
+                        {event}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="text-gray-500 text-sm">No events joined</span>
+                  )}
                 </div>
               </div>
             </div>
